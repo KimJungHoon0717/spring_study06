@@ -22,7 +22,7 @@ public class BDao {
 		// TODO Auto-generated constructor stub
 		  try {
 		         Context context = new InitialContext();
-		         dataSource = (DataSource) context.lookup("java:comp/env/env/jdbc/Oracle11g");
+		         dataSource = (DataSource) context.lookup("java:comp/env/jdbc/Oracle11g");
 		         
 		      }catch(Exception e){
 		         
@@ -50,10 +50,14 @@ public class BDao {
 			// 게시글 번호의 내림차순 정렬로 모든 글 목록 가져오기)최근글이 가장 위에 오도록 함)
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.executeQuery();
+			rs = pstmt.executeQuery();
+			
+			
+			System.out.print(rs.next());
 			
 			while(rs.next()) {
 				int bid = rs.getInt("bid");
+				System.out.println(bid);
 				String bname = rs.getString("bname");
 				String btitle = rs.getString("btitle");
 				String bcotent = rs.getString("bcontent");
@@ -63,7 +67,7 @@ public class BDao {
 				int bstep = rs.getInt("bstep");
 				int bindent = rs.getInt("bindent");
 				
-				System.out.println("btitle");
+				
 				
 				BDto dto = new BDto(bid, bname,	bcotent, btitle, bdate, bhit, bgroup, bstep, bindent);
 				dtos.add(dto);
